@@ -1,0 +1,293 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 09-06-2023 a las 04:58:37
+-- Versión del servidor: 8.0.27
+-- Versión de PHP: 7.4.26
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `db_rrhh`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_area`
+--
+
+DROP TABLE IF EXISTS `tbl_area`;
+CREATE TABLE IF NOT EXISTS `tbl_area` (
+  `id_area` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_area`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_area`
+--
+
+INSERT INTO `tbl_area` (`id_area`, `nombre`) VALUES
+(13, 'limpieza'),
+(15, 'mecanicos'),
+(24, 'Ventas'),
+(26, 'Display');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_capacitaciones`
+--
+
+DROP TABLE IF EXISTS `tbl_capacitaciones`;
+CREATE TABLE IF NOT EXISTS `tbl_capacitaciones` (
+  `id_capacitaciones` int NOT NULL AUTO_INCREMENT,
+  `tema` varchar(100) NOT NULL,
+  `id_empresa` int NOT NULL,
+  `area` int NOT NULL,
+  `capacitador` varchar(100) NOT NULL,
+  `lugar` varchar(100) NOT NULL,
+  `fecha` date NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_capacitaciones`),
+  KEY `id_empresa` (`id_empresa`),
+  KEY `area` (`area`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_capacitaciones`
+--
+
+INSERT INTO `tbl_capacitaciones` (`id_capacitaciones`, `tema`, `id_empresa`, `area`, `capacitador`, `lugar`, `fecha`, `estado`) VALUES
+(1, 'Inteligencia', 33, 13, 'Lic. Miguel Enrique Arauj', 'Pollo campestre Roolvelt', '2023-06-22', 1),
+(12, 'Limitacion de recursos', 33, 24, 'Lic. Marroco del coco', 'Asador centro', '2023-06-30', 0),
+(13, 'jenf', 32, 24, 'eml jrnd', 'jdnfj', '2023-06-29', 0),
+(14, 'kdfnj', 32, 24, 'sjdej', 'skmdjn', '2023-06-29', 0),
+(16, 'md j', 33, 13, 'dcd xs', 'jndjnc', '2023-06-30', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_departamentos`
+--
+
+DROP TABLE IF EXISTS `tbl_departamentos`;
+CREATE TABLE IF NOT EXISTS `tbl_departamentos` (
+  `idDepartamento` int NOT NULL AUTO_INCREMENT,
+  `Departamento` varchar(50) NOT NULL,
+  `pf` varchar(2) NOT NULL,
+  PRIMARY KEY (`idDepartamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_departamentos`
+--
+
+INSERT INTO `tbl_departamentos` (`idDepartamento`, `Departamento`, `pf`) VALUES
+(1, 'Ahuachapán', 'ah'),
+(2, 'Cabañas', 'ca'),
+(3, 'Chalatenango', 'ch'),
+(4, 'Cuscatlan', 'cu'),
+(5, 'La libertad', 'li'),
+(6, 'Morazán', 'mo'),
+(7, 'La Paz', 'pa'),
+(8, 'Santa Ana', 'sa'),
+(9, 'San Miguel', 'sm'),
+(10, 'San Salvador', 'ss'),
+(11, 'San Vicente', 'sv'),
+(12, 'Sonsonate', 'so'),
+(13, 'La Unión', 'un'),
+(14, 'Usulutan', 'us');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_empleados`
+--
+
+DROP TABLE IF EXISTS `tbl_empleados`;
+CREATE TABLE IF NOT EXISTS `tbl_empleados` (
+  `id_empleados` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `fechaNacimiento` date NOT NULL,
+  `genero` char(1) NOT NULL,
+  `telefono` int NOT NULL,
+  `id_empresa` int NOT NULL,
+  `area` int NOT NULL,
+  PRIMARY KEY (`id_empleados`),
+  KEY `id_empresa` (`id_empresa`),
+  KEY `area` (`area`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_empleados`
+--
+
+INSERT INTO `tbl_empleados` (`id_empleados`, `nombre`, `fechaNacimiento`, `genero`, `telefono`, `id_empresa`, `area`) VALUES
+(9, 'Juan Antonio Merlos', '2023-06-06', 'M', 78372829, 32, 13),
+(10, 'Miguel Angel Guerrero Rey', '2023-06-01', 'M', 76483839, 33, 13),
+(11, 'Sofia Ester Cardona Mendez', '2023-06-02', 'F', 72839283, 32, 26),
+(16, 'Fidel Armando Perez Lazo', '2023-06-06', 'M', 78392929, 32, 24),
+(17, 'wjdnujwnds', '2023-06-01', 'M', 72839283, 33, 26);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_empresas`
+--
+
+DROP TABLE IF EXISTS `tbl_empresas`;
+CREATE TABLE IF NOT EXISTS `tbl_empresas` (
+  `id_empresa` int NOT NULL AUTO_INCREMENT,
+  `nombreComercial` varchar(100) NOT NULL,
+  `razonSocial` varchar(200) NOT NULL,
+  `direccionGeneral` varchar(100) NOT NULL,
+  `idDepartamento` int NOT NULL,
+  `telefonoempresarial` int NOT NULL,
+  `correoEmpresarial` varchar(100) NOT NULL,
+  `idUsuario` int NOT NULL,
+  `fechaCreacion` datetime NOT NULL,
+  PRIMARY KEY (`id_empresa`),
+  KEY `idDepartamento` (`idDepartamento`),
+  KEY `idUsuario` (`idUsuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tbl_empresas`
+--
+
+INSERT INTO `tbl_empresas` (`id_empresa`, `nombreComercial`, `razonSocial`, `direccionGeneral`, `idDepartamento`, `telefonoempresarial`, `correoEmpresarial`, `idUsuario`, `fechaCreacion`) VALUES
+(32, 'Almacenes bomba', 'ventas de articulos diversos', 'San miguel Centro', 9, 79829323, 'bomba@gmail.com', 1, '2023-06-02 02:26:32'),
+(33, 'Almacenes bou', 'venta de herraminetas', 'san miguel', 9, 74839393, 'bou@gmail.com', 1, '2023-06-06 21:05:32');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_gestio_areas`
+--
+
+DROP TABLE IF EXISTS `tbl_gestio_areas`;
+CREATE TABLE IF NOT EXISTS `tbl_gestio_areas` (
+  `id_gestion` int NOT NULL AUTO_INCREMENT,
+  `id_empresa` int NOT NULL,
+  `id_area` int NOT NULL,
+  PRIMARY KEY (`id_gestion`),
+  KEY `id_empresa` (`id_empresa`),
+  KEY `id_area` (`id_area`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_gestio_areas`
+--
+
+INSERT INTO `tbl_gestio_areas` (`id_gestion`, `id_empresa`, `id_area`) VALUES
+(1, 33, 13),
+(6, 32, 26),
+(7, 33, 13),
+(8, 33, 24),
+(9, 33, 26);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_roles`
+--
+
+DROP TABLE IF EXISTS `tbl_roles`;
+CREATE TABLE IF NOT EXISTS `tbl_roles` (
+  `id_Rol` int NOT NULL AUTO_INCREMENT,
+  `rol` varchar(30) NOT NULL,
+  PRIMARY KEY (`id_Rol`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_roles`
+--
+
+INSERT INTO `tbl_roles` (`id_Rol`, `rol`) VALUES
+(1, 'SuperAdmin'),
+(2, 'Admin'),
+(3, 'General');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_usuarios`
+--
+
+DROP TABLE IF EXISTS `tbl_usuarios`;
+CREATE TABLE IF NOT EXISTS `tbl_usuarios` (
+  `id_Usuario` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `pwd` varchar(100) NOT NULL,
+  `id_Rol` int NOT NULL,
+  PRIMARY KEY (`id_Usuario`),
+  UNIQUE KEY `usuario` (`usuario`),
+  UNIQUE KEY `nombre` (`nombre`),
+  KEY `id_Rol` (`id_Rol`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_usuarios`
+--
+
+INSERT INTO `tbl_usuarios` (`id_Usuario`, `nombre`, `usuario`, `pwd`, `id_Rol`) VALUES
+(1, 'Administrador', 'admin', '202cb962ac59075b964b07152d234b70', 1),
+(2, 'Juan Manuel Gomez Toledo', 'Jmanuel', '202cb962ac59075b964b07152d234b70', 2),
+(3, 'Miguel Angel Dueñas Cruz', 'Mangel', '202cb962ac59075b964b07152d234b70', 3),
+(18, 'Juana Armida Gutierrez', 'Jarmida', '81dc9bdb52d04dc20036dbd8313ed055', 1);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `tbl_capacitaciones`
+--
+ALTER TABLE `tbl_capacitaciones`
+  ADD CONSTRAINT `tbl_capacitaciones_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `tbl_empresas` (`id_empresa`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `tbl_capacitaciones_ibfk_2` FOREIGN KEY (`area`) REFERENCES `tbl_area` (`id_area`);
+
+--
+-- Filtros para la tabla `tbl_empleados`
+--
+ALTER TABLE `tbl_empleados`
+  ADD CONSTRAINT `tbl_empleados_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `tbl_empresas` (`id_empresa`),
+  ADD CONSTRAINT `tbl_empleados_ibfk_2` FOREIGN KEY (`area`) REFERENCES `tbl_area` (`id_area`);
+
+--
+-- Filtros para la tabla `tbl_empresas`
+--
+ALTER TABLE `tbl_empresas`
+  ADD CONSTRAINT `tbl_empresas_ibfk_1` FOREIGN KEY (`idDepartamento`) REFERENCES `tbl_departamentos` (`idDepartamento`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `tbl_empresas_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `tbl_usuarios` (`id_Usuario`);
+
+--
+-- Filtros para la tabla `tbl_gestio_areas`
+--
+ALTER TABLE `tbl_gestio_areas`
+  ADD CONSTRAINT `tbl_gestio_areas_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `tbl_empresas` (`id_empresa`),
+  ADD CONSTRAINT `tbl_gestio_areas_ibfk_2` FOREIGN KEY (`id_area`) REFERENCES `tbl_area` (`id_area`);
+
+--
+-- Filtros para la tabla `tbl_usuarios`
+--
+ALTER TABLE `tbl_usuarios`
+  ADD CONSTRAINT `tbl_usuarios_ibfk_1` FOREIGN KEY (`id_Rol`) REFERENCES `tbl_roles` (`id_Rol`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
